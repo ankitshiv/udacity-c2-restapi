@@ -52,16 +52,9 @@ router.patch('/:id',
 });
 
 
-router.get('/feed-image/:id', 
+router.get('/feed-image/:id',
+    requireAuth,
     async (req: Request, res: Response) => {
-
-    // var imageUrl = req.query.imageUrl;
-    // await rp(imageFilterServiceUrl + '/filteredimage?image_url=' + imageUrl)
-    //     .then((image) => {
-    //         res.sendFile(image);
-    //     }).catch((e) => {
-    //         res.status(500).send(e);
-    //     })
     
     // DOES NOT WORK FOR UDASHIVHARE S3 BUCKET SIGNED IMAGE URLS AS IMAGES ARE NOT PUBLIC
     let { id } = req.params;
