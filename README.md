@@ -8,6 +8,14 @@ A basic Ionic client web application which consumes the RestAPI Backend.
 2. [The RestAPI Backend](https://github.com/ankitshiv/udacity-c2-restapi), a Node-Express server which can be deployed to a cloud service.
 3. [The Image Filtering Microservice](https://github.com/ankitshiv/image-filter-starter-code), the final project for the course. It is a Node-Express application which runs a simple script to process images.
 
+# Links
+1. s3 bucket served static website (simple frontend) - http://udashivharefrontend.s3-website.us-east-2.amazonaws.com
+2. Image service URL interfaced with Route53 Domain name - http://image-service.drigbhu.com; use /filterimage?image_url={{}} to get filtered image
+3. Udacity-c2-restapi with updated endpoints interfaced with Route53 Domain name -  http://udagram-backend.drigbhu.com; refer to [link](https://github.com/ankitshiv/image-filter-starter-code) for endpoint info
+
+# new endpoints
+1. GET /api/v0/filteredimage?imageUrl={{url}} - get filtered image for any public image url; currently only serves buffered output instead of image file
+2. GET /api/v0/feed/feed-image/:id - get filtered image for a feed image by feed id; requires auth; currently does not serve feed images as they are not public
 
 ***
 ## Getting Setup
