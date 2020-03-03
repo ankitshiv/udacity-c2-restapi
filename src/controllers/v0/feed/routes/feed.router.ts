@@ -2,8 +2,11 @@ import { Router, Request, Response } from 'express';
 import { FeedItem } from '../models/FeedItem';
 import { requireAuth } from '../../users/routes/auth.router';
 import * as AWS from '../../../../aws';
+import rp = require('request-promise');
 
 const router: Router = Router();
+const imageFilterServiceUrl : string = 'http://localhost:8082'
+// 'http://image-filter-starter-code-dev22222222.us-east-1.elasticbeanstalk.com';
 
 // Get all feed items
 router.get('/', async (req: Request, res: Response) => {
@@ -47,6 +50,36 @@ router.patch('/:id',
         }).catch((err) => {
             res.status(400).send({message: "bad request", err})
         });
+});
+
+
+router.get('/feed-image/:id', 
+    async (req: Request, res: Response) => {
+
+    // var imageUrl = req.query.imageUrl;
+    // await rp(imageFilterServiceUrl + '/filteredimage?image_url=' + imageUrl)
+    //     .then((image) => {
+    //         res.sendFile(image);
+    //     }).catch((e) => {
+    //         res.status(500).send(e);
+    //     })
+    
+    // DOES NOT WORK FOR UDASHIVHARE S3 BUCKET SIGNED IMAGE URLS AS IMAGES ARE NOT PUBLIC
+    let { id } = req.params;
+    console.log(id);
+    const item = await FeedItem.findByPk(id);
+
+    if (!item) {
+        res.status(404).send({message: "item for id=" + id + " not found"})
+    } else {
+        item.url = await AWS.getGetSignedUrl(item.url);
+        await rp(imageFilterServiceUrl + '/filteredimage?image_url=' + item.url)
+        .then((image) => {
+            res.sendFile(image);
+        }).catch((e) => {
+            res.status(500).send(e);
+        });
+    }
 });
 
 
