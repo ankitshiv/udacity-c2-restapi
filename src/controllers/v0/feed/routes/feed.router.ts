@@ -5,8 +5,7 @@ import * as AWS from '../../../../aws';
 import rp = require('request-promise');
 
 const router: Router = Router();
-const imageFilterServiceUrl : string = 'http://localhost:8082'
-// 'http://image-filter-starter-code-dev22222222.us-east-1.elasticbeanstalk.com';
+const imageFilterServiceUrl : string = 'http://image-filter-starter-code-dev22222222.us-east-1.elasticbeanstalk.com' //'http://localhost:8082'
 
 // Get all feed items
 router.get('/', async (req: Request, res: Response) => {
